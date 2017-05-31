@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<br />
+<br />
+<br />
+
+<div class="col-md-4">
+
+    <div>
+        <input class="col-md-4" type="text" id="textData" />
+        <input class="col-md-4" type="button" value="Send" onclick="GetData()" />
+    </div>
+
+    <br />
+
+</div>
+
+<br />
+<div class="col-md-4">
+    <div>
+        <label class="col-md-4">Result Decrypt:</label>
+        <label class="col-md-4" id="resultD"></label>
+    </div>
+</div>
+<div class="col-md-4">
+    <div>
+        <label class="col-md-4">Result Encrypt:</label>
+        <label class="col-md-4" id="resultE"></label>
+    </div>
+</div>
+
+    <br />
+
+
+
+    @section Scripts {
+
+        <script type="text/javascript">
+
+            function GetData() {
+                var data = $("#textData").val();
+                data = {
+                    text: data
+                };
+                data = JSON.stringify(data, null, 4);
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/getDataPass",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: data,
+                    success: function (json) {
+                        $("#resultE").text(json.EncryptText);
+                        $("#resultD").text(json.DecryptText);
+
+                    },
+                    error: function () {
+
+                        alert('Error');
+                    }
+                });
+            }
+
+
+        </script>
+
+
+
+    }
